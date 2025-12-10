@@ -55,7 +55,7 @@
       },
       "scripts": {
             "dev": "vite",
-            "build": "vite build"
+            "build": "node ./node_modules/vite/dist/node/cli.js build"
       },
       "description": "This is a code bundle for Project Overview and UI Reference. The original project is available at https://www.figma.com/design/s7S21u3TwKrqeF2C3VVG1p/Project-Overview-and-UI-Reference.",
       "main": "index.js",

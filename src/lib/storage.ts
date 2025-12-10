@@ -48,6 +48,11 @@ function getFromStorage<T>(key: string, defaultValue: T[] = []): T[] {
   }
 }
 
+// API base (use Vite environment variable in production)
+const API_BASE = typeof import.meta !== 'undefined' && (import.meta as any).env && (import.meta as any).env.VITE_API_BASE_URL
+  ? (import.meta as any).env.VITE_API_BASE_URL
+  : '';
+
 function saveToStorage<T>(key: string, data: T[]): void {
   localStorage.setItem(key, JSON.stringify(data));
 }
@@ -68,7 +73,7 @@ export const projectStorage = {
     // background sync to backend
     (async () => {
       try {
-        await fetch('/api/projects', {
+        await fetch(`${API_BASE}/api/projects`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(newProject),
@@ -84,7 +89,7 @@ export const projectStorage = {
     projectStorage.save(projects);
     (async () => {
       try {
-        await fetch(`/api/projects/${id}`, { method: 'DELETE' });
+        await fetch(`${API_BASE}/api/projects/${id}`, { method: 'DELETE' });
       } catch {
         // ignore
       }
@@ -107,7 +112,7 @@ export const clientStorage = {
     clientStorage.save(clients);
     (async () => {
       try {
-        await fetch('/api/clients', {
+        await fetch(`${API_BASE}/api/clients`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(newClient),
@@ -121,7 +126,7 @@ export const clientStorage = {
     clientStorage.save(clients);
     (async () => {
       try {
-        await fetch(`/api/clients/${id}`, { method: 'DELETE' });
+        await fetch(`${API_BASE}/api/clients/${id}`, { method: 'DELETE' });
       } catch {}
     })();
   },
@@ -142,7 +147,7 @@ export const contactStorage = {
     contactStorage.save(contacts);
     (async () => {
       try {
-        await fetch('/api/contacts', {
+        await fetch(`${API_BASE}/api/contacts`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(newContact),
@@ -172,7 +177,7 @@ export const subscriberStorage = {
     subscriberStorage.save(subscribers);
     (async () => {
       try {
-        await fetch('/api/subscribers', {
+        await fetch(`${API_BASE}/api/subscribers`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email }),
